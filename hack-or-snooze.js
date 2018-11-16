@@ -21,8 +21,6 @@ $(function() {
     $("#log-in-form").slideToggle();
   })
 
-
-
   $ol.on('click', '.far, .fas', function(event) {
     $(event.target).toggleClass('far fas');
     if ($(event.target).hasClass('fas')) {
@@ -165,6 +163,4 @@ $(function() {
   defaultPage();
 });
 
-// default page
-// 1.empty($(ol))2. get the ten sotories from getstorylist, and for loop to creat <li> and append the 10 li in the ol
-//
+
