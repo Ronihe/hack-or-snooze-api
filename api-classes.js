@@ -105,6 +105,8 @@ class User {
         this.loginToken = res.token;
         localStorage.setItem(this.username, this.loginToken);
         localStorage.setItem('username', this.username);
+        localStorage.setItem('name', this.name);
+
         return cb(this);
       }
     );

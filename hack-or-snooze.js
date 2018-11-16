@@ -1,6 +1,30 @@
+
+
+
+
+
 $(function() {
-  let currentUser;
+  //let currentUser;
+  //let storyList;\
+
+  let user;
   let storyList;
+  let username =localStorage.getItem("username");
+  let token = localStorage.getItem(username);
+  let currentUser;
+
+  
+  // how to have the user instance when we first load the page,
+  // we know there is a user logged in, let's get his all details
+  if(token && username){
+    currentUser= new User(username);
+    currentUser.loginToken = token;
+    currentUser.retrieveDetails(userWithAllDetails => {
+      console.log(userWithAllDetails);
+      //currentUser = userWithAllDetails;
+    })
+  }
+
   let $submit = $('#submit');
   let $favorites = $('#favorites');
   let $form = $('#form');
@@ -58,7 +82,7 @@ $(function() {
   //   $list.append($span, $a, $small);
   //   $ol.append($list);
   // });
-
+//refactor 
   $favorites.on('click', function(event) {
     $('.far')
       .parent()
@@ -147,8 +171,8 @@ $(function() {
     let $title = $('#title').val();
     let $author = $('#author').val();
     let $url = $('#url').val();
-    let user = localStorage.getItem('username');
-    let token = localStorage.getItem(user);
+    // let user = localStorage.getItem('username');
+    // let token = localStorage.getItem(user);
     console.log(token);
     console.log(user);
     //let story = new StoryList();
@@ -173,7 +197,7 @@ $(function() {
   $('#my-profile').on('click', function(e) {
     e.preventDefault();
     alert(
-      `Username: ${currentUser.username}, Name: ${localStorage.getItem('username')}`
+      `Username: ${currentUser.username}, Name: ${currentUser.name}`
     );
   });
 
