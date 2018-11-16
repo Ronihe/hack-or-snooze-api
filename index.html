@@ -1,18 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="hack-or-snooze.css">
 </head>
-
 <body>
-  <h1>Open up the chrome console!</h1>
-  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-  <script src="api-classes.js"></script>
-</body>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg">
+      <span class='nav-brand slight-large-font'><b>Hack or Snooze</b></span>
+      <ul id='navig-menu' class="navbar-nav mr-auto pl-4">
+        <li class="nav-item"><a href="javascript:void(0)" class='nav-link link-hover' id='submit'>Create A Story</a></li>
+        <li class="nav-item"><a href="javascript:void(0)" class='nav-link link-hover' id='favorites'>Favorites</a></li>
+        <li class="nav-item"><a href="javascript:void(0)" class='nav-link link-hover' id='toggle-log-in'>Log in</a></li>
+        <li class="nav-item"><a href="javascript:void(0)" class='nav-link link-hover' id='toggle-sign-up'>Sign up</a></li>
+        <li class="nav-item"><a href="javascript:void(0)" class='nav-link link-hover hidden' id='all'>All</a></li>
+      </ul>
+    </nav>
 
+
+    <!-- SignUP form -->
+    <div style='display: none;' id="sign-up-form">
+      <form class="form-horizontal bg-secondary pb-3">
+        <div class="row container">
+          <div class=“col align-middle”>
+            <input type=“text” id="sign-up-username" placeholder=“username”>
+          </div>
+          <div class=“col”>
+            <input type=“text” id="sign-up-name" placeholder=“name”>
+          </div>
+          <div class=“col”>
+            <input type=“text” id="sign-up-password" placeholder=“password”>
+          </div>
+          <div class='col'>
+            <div><button type='submit' id='sign-up' class="btn btn-danger">submit</button></div>
+          </div>
+        </div>
+       </form>
+    </div>
+
+<!-- login Form -->
+<div style='display: none;' id="log-in-form">
+  <form class="form-horizontal bg-secondary pb-3">
+    <div class="row container">
+
+      <div class=“col”>
+        <input type=“text”  id="log-in-username" placeholder=“name”>
+      </div>
+      <div class=“col”>
+        <input type=“text”  id="log-in-password" placeholder=“password”>
+      </div>
+      <div class='col'>
+        <div><button type='submit' id='log-in' class="btn btn-danger">submit</button></div>
+      </div>
+    </div>
+   </form>
+</div>
+
+<!-- create a story form -->
+    <div id="form" style='display: none;'>
+      <form class='form-horizontal bg-secondary pb-3' id='add-new-form' action="#">
+        <div class='form-group row pt-2'>
+          <label class='form-label pl-4 col-1' for="title">title</label>
+          <div><input class='rounded text-field' type="text" name="title" id='title' autocomplete='off'></div>
+        </div>
+        <div class='form-group row pt-2'>
+          <label class='form-label pl-4 col-1' for="title">author</label>
+          <div><input class='rounded text-field' type="text" name="author" id='author' autocomplete='off'></div>
+        </div>
+        <div class='form-group row'>
+          <label class='form-label pl-4 col-1' for="url">url</label>
+          <div><input class='rounded text-field' type="url" name='url' id='url' autocomplete='off'></div>
+        </div>
+        <div class='form-group pl-3'>
+          <div><button type='submit' id='submit-button' class="btn btn-danger">submit</button></div>
+        </div>
+      </form>
+    </div>
+      
+    <ol id='ol'> 
+      <!-- <li class='py-1'><span class="far fa-star"></span> <a href="https://visualgo.net/">Visualizing Algorithms</a> <small>(visualgo.net)</small></li>
+      <li class='py-1'><span class="far fa-star"></span> <a href="https://www.rithmschool.com/blog/problem-solving-strategies-01">Problem Solving with Rithm</a> <small>(rithmschool.com)</small></li>
+      <li class='py-1'><span class="far fa-star"></span> <a href="https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/">Buy this book!</a> <small>(amazon.com)</small></li>
+      <li class='py-1'><span class="far fa-star"></span> <a href="https://github.com/whiskey-the-dog">Dogs on Github</a> <small>(github.com)</small></li>
+      <li class='py-1'><span class="far fa-star"></span> <a href="https://www.rithmschool.com/blog/problem-solving-strategies-02">MOAR PROBLEM SOLVING</a> <small>(rithmschool.com)</small></li> -->
+    </ol>
+    
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="api-classes.js"></script>
+  <script src="hack-or-snooze.js"></script>
+</body>
 </html>

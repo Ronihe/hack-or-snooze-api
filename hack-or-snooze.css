@@ -1,0 +1,39 @@
+nav {
+  background-color: orange;
+}
+ol,
+form {
+  background-color: lightgrey;
+}
+
+li a,
+li a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+small:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link-hover:hover {
+  text-decoration: underline;
+}
+
+.text-field {
+  width: 50ch;
+}
+
+.slight-large-font {
+  font-size: 1.25em;
+}
+
+.hidden {
+  display: none;
+}
+
+.hidden-list {
+  list-style-type: none;
+}
+
