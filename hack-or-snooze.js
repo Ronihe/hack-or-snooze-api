@@ -28,6 +28,10 @@ $(function() {
       currentUser.addFavorite(`${event.target.id}`, user => {
         console.log(user);
       });
+    }else if ($(event.target).hasClass('far')) {
+      currentUser.removeFavorite(`${event.target.id}`, user => {
+        console.log(user);
+      });
     }
   });
 
@@ -140,7 +144,6 @@ $(function() {
 
   $('#submit-button').on('click', function newStory(e) {
     e.preventDefault();
-    console.log('hllo');
     let $title = $('#title').val();
     let $author = $('#author').val();
     let $url = $('#url').val();
@@ -155,10 +158,24 @@ $(function() {
         defaultPage()
     );
     $form.slideToggle();
+    $('#title').empty();
+    $('#author').empty()
+    $('#url').empty()
   });
-  $('#title').empty();
-  $('#author').empty()
-  $('#url').empty()
+
+
+  $('#log-out').on('click', function(e) {
+    e.preventDefault();
+    currentUser = undefined;
+    localStorage.clear();
+  });
+
+  $('#my-profile').on('click', function(e) {
+    e.preventDefault();
+    alert(
+      `Username: ${currentUser.username}, Name: ${localStorage.getItem('name')}`
+    );
+  });
 
   defaultPage();
 });
