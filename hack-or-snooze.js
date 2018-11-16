@@ -45,10 +45,27 @@ $(function() {
     $("#log-in-form").slideToggle();
   })
 
-  $ol.on('click', '.far, .fas', function(event) {
-    $(event.target).toggleClass('far fas');
+
+//make the add the delete function as a individual function, so it can be used in mystories and my-
+$('#default-page').on('click', '.far, .fas', deleteAndAddStory);
+
+//everytime I click the list below, execute the deleteAndAddStory, and then refresh the make favList 
+$('#my-fav').on('click', '.far, .fas', (e)=>{
+  deleteAndAddStory(e);
+ refreshFav();
+});
+
+//everytime I click the list below, execute the deleteAndAddStory, and then refresh the make make storyList
+$('#my-stories').on('click', '.far, .fas', (e)=>{
+  deleteAndAddStory(e);
+ // refresh my story 
+});
+
+
+function deleteAndAddStory(event){
+  $(event.target).toggleClass('far fas');
     if ($(event.target).hasClass('fas')) {
-      //console.log(event.target.id);
+      console.log(event.target.id);
       currentUser.addFavorite(`${event.target.id}`, user => {
         console.log(user);
       });
@@ -57,42 +74,51 @@ $(function() {
         console.log(user);
       });
     }
-  });
+}
 
-  // $form.on('submit', function(event) {
-  //   event.preventDefault();
-  //   // list span a small
-  //   let title = $title.val();
-  //   let urlValue = $url.val();
 
-  //   let $span = $('<span>').addClass('far fa-star');
-  //   let $a = $('<a>')
-  //     .attr(`href`, urlValue)
-  //     .text(` ${title} `);
-
-  //   let hostname = $a
-  //     .prop('hostname')
-  //     .split('.')
-  //     .slice(-2)
-  //     .join('.');
-
-  //   let $small = $('<small>').text(` (${hostname})`);
-  //   let $list = $('<li>').addClass('py-1');
-
-  //   $list.append($span, $a, $small);
-  //   $ol.append($list);
-  // });
 //refactor 
-  $favorites.on('click', function(event) {
-    $('.far')
-      .parent()
-      .addClass('hidden');
-    $('.fas')
-      .parent()
-      .addClass('hidden-list');
+  function refreshFav(){
+    //$favorites.on('click', function(event) {
+    $('#my-fav').empty();
+    makeFavList();
     $favorites.addClass('hidden');
     $all.toggleClass('hidden');
+
+  }
+  $favorites.on('click', refreshFav);
+
+
+
+  function makeFavList(){
+    currentUser.favorites.forEach(story =>{
+      let storyList = $(`<li class='py-1'><span id = ${story.storyId} class="fas fa-star"></span> <a href=${story.url}>${story.title}</a> <small>${story.url}</small></li>`);
+      $('#my-fav').append(storyList);
+    })
+  }
+
+  // make my sotries
+  $('#my-stories-btn').on('click', makeMyStories);
+
+function makeMyStories(){
+  let favList = currentUser.favorites;
+  let favListStoryId = favList.map( el => {
+    return el.storyId
   });
+  console.log(favList);
+  currentUser.ownStories.forEach(story =>{
+    let storyList;
+    //if it is included in favList,
+    if(favListStoryId.includes(story.storyId)){
+      storyList =$(`<li class='py-1'><span id = ${story.storyId} class="fas fa-star"></span> <a href=${story.url}>${story.title}</a> <small>${story.url}</small></li>`);
+      $('#my-stories').append(storyList);
+    }else{
+      storyList = $(`<li class='py-1'><span id = ${story.storyId} class="far fa-star"></span> <a href=${story.url}>${story.title}</a> <small>${story.url}</small></li>`);
+      $('#my-stories').append(storyList);
+    }
+  })
+}
+
 
   $all.on('click', function(event) {
     $('.hidden').removeClass('hidden');
@@ -117,7 +143,7 @@ $(function() {
 
   //Starting class list functionality
   function defaultPage() {
-    $('ol').empty();
+    $('#default-page').empty();
     StoryList.getStories(story => {
       storyList = story;
       for (let i = 0; i < 10; i++) {
@@ -128,14 +154,13 @@ $(function() {
             story.stories[i].title
           }</a> <small>(${story.stories[i].url})</small></li>`
         );
-        $('ol').append(listItem);
+        $('#default-page').append(listItem);
       }
     });
   }
 
   $('#sign-up').on('click', function signUp(e) {
     e.preventDefault();
-
     let $username = $('#sign-up-username').val();
     let $name = $('#sign-up-name').val();
     let $password = $('#sign-up-password').val();
@@ -207,5 +232,6 @@ $(function() {
   });
 
   defaultPage();
+
 });
 
