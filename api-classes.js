@@ -40,9 +40,12 @@ class StoryList {
         const { author, title, url, username, storyId } = res.story;
         const newStory = new Story(author, title, url, username, storyId);
         this.stories.push(newStory);
-        user.retrieveDetails(() => cb(newStory));
-      }
-    );
+        this.stories.push(newStory);
+        user.retrieveDetails(() => cb(this)
+          // add the story into the ownstory list
+          //console.log(newStory);
+        );
+      });
   }
 
   // pass in  an id of a story, and a callback function to remove(),
@@ -89,6 +92,10 @@ class User {
         const { username, name } = response.user;
         const newUser = new User(username, password, name);
         localStorage.setItem('TOKEN', response.token);
+        // do what's in login
+        // in localStorage, set a key for your username
+        // and a key for your token that match
+        // what you're doing at the top of hack-or-snooze.js
         newUser.loginToken = response.token;
         return cb(newUser);
       }
@@ -118,8 +125,11 @@ class User {
       url: `${BASE_URL}/users/${this.username}`,
       data: { token: this.loginToken },
       success: res => {
+        console.log("RETRIEVE DETAILS RES", res);
         this.favorites = res.user.favorites;
-        this.ownStories = res.user.ownStories;
+        this.ownStories = res.user.stories;
+        // this.stories = res.user.stories <-- option 1
+        // this.ownStories = res.user.stories <-- option 2
         this.createdAt = res.user.createdAt;
         this.updatedAt = res.user.updatedAt;
         this.name = res.user.name;

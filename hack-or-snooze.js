@@ -20,8 +20,8 @@ $(function() {
     currentUser= new User(username);
     currentUser.loginToken = token;
     currentUser.retrieveDetails(userWithAllDetails => {
-      console.log(userWithAllDetails);
-      //currentUser = userWithAllDetails;
+      console.log("USER IS ALREADY LOGGED IN", userWithAllDetails);
+      currentUser = userWithAllDetails;
     })
   }
 
@@ -52,7 +52,7 @@ $(function() {
       currentUser.addFavorite(`${event.target.id}`, user => {
         console.log(user);
       });
-    }else if ($(event.target).hasClass('far')) {
+    } else if ($(event.target).hasClass('far')) {
       currentUser.removeFavorite(`${event.target.id}`, user => {
         console.log(user);
       });
@@ -159,9 +159,12 @@ $(function() {
     let $password = $('#log-in-password').val();
     let newUser = new User($username, $password);
     newUser.login(xyz => {
-      console.log(xyz);
+      console.log("xyz", xyz);
       currentUser = xyz;
-      alert(`Thank you ${$username}, you are now logged in`);
+      currentUser.retrieveDetails(currentUserwithAllDetail => {
+        currentUser = currentUserwithAllDetail;
+        console.log("latest currentUser", currentUser);
+      })
     });
     $("#log-in-form").slideToggle();
   });
@@ -171,21 +174,23 @@ $(function() {
     let $title = $('#title').val();
     let $author = $('#author').val();
     let $url = $('#url').val();
-    // let user = localStorage.getItem('username');
-    // let token = localStorage.getItem(user);
-    console.log(token);
-    console.log(user);
+
+    // console.log(token);
+    console.log(currentUser);
     //let story = new StoryList();
     storyList.addStory(
       currentUser,
       { author: $author, title: $title, url: $url },
-        defaultPage()
-    );
+        ()=>{
+          defaultPage();
+        alert(`created a new, ${currentUser}`);
+        // add the story to theown story list 
     $form.slideToggle();
     $('#title').empty();
     $('#author').empty()
     $('#url').empty()
   });
+});
 
 
   $('#log-out').on('click', function(e) {
@@ -203,5 +208,4 @@ $(function() {
 
   defaultPage();
 });
-
 
