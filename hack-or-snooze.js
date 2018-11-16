@@ -173,7 +173,7 @@ $(function() {
   $('#my-profile').on('click', function(e) {
     e.preventDefault();
     alert(
-      `Username: ${currentUser.username}, Name: ${localStorage.getItem('name')}`
+      `Username: ${currentUser.username}, Name: ${localStorage.getItem('username')}`
     );
   });
 
